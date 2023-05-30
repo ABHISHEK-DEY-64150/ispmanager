@@ -40,6 +40,9 @@ Rails.application.routes.draw do
 
   get "/customerlogin" => "customers#signIn"
 
+  get "/showpackages" =>  "customers#showpackages"
+
+
   get "/customerDashboard" => "customers#dashboard"
 
   delete "/logoutcustomer" => 'customers#destroy'

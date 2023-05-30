@@ -5,6 +5,13 @@ class CustomersController < ApplicationController
       puts notice
     end
 
+    def showpackages
+      @fields=Package.column_names
+      @records = Package.all
+      p "Fields here ",@fields
+      p "Records here",@records
+    end
+    
 
     def loginCustomer
         customer = Customer.find_by(email:customer_login_params[:email])

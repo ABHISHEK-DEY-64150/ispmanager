@@ -1,0 +1,18 @@
+<html>
+<!-- database_table.erb -->
+<h3>List of all packages provided for you : </h3>
+<table>
+  <tr>
+    <th>Description</th>
+    <th>Price</th>
+  </tr>
+  <tr>
+    <% @records.each do |s| %>
+      <td><%= s.description %></td>
+      <td><%= s.price %></td>
+    <% end %>
+  </tr>
+</table>
+
+
+</html>
