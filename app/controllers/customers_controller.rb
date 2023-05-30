@@ -1,3 +1,6 @@
+require 'erb'
+
+
 class CustomersController < ApplicationController
   before_action :require_customer_logged_in ,only: [:dashboard]
 
@@ -6,10 +9,24 @@ class CustomersController < ApplicationController
     end
 
     def showpackages
-      @fields=Package.column_names
-      @records = Package.all
+
+      @fields=Package.column_names[0...-2]
+      @records = Package.all.as_json
+      # @records=@records[0...-2]
       p "Fields here ",@fields
       p "Records here",@records
+      p "Record type",@records.class
+
+      # Sample data
+
+      # Load and render the ERB template
+      template = File.read('app/views/customers/showpackages.html.erb')
+      erb = ERB.new(template)
+      result = erb.result(binding)
+
+      # Output the rendered result
+      puts result
+
     end
     
 
