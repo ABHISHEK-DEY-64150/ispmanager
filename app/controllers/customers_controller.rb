@@ -8,11 +8,20 @@ class CustomersController < ApplicationController
       puts notice
     end
 
+    def internet
+
+      @packages=Package.where(servicetype:"Internet")
+
+      p "Here Goes Packages : ",@packages
+
+      p "Testing the serviceType ",@packages[0].price
+    end
+
+
     def showpackages
 
       @fields=Package.column_names[0...-2]
       @records = Package.all.as_json
-      # @records=@records[0...-2]
       p "Fields here ",@fields
       p "Records here",@records
       p "Record type",@records.class

@@ -42,6 +42,11 @@ Rails.application.routes.draw do
 
   get "/showpackages" =>  "customers#showpackages"
 
+  get "/chooseservice"  => "customers#chooseservice"
+
+  get "/internet"  =>  "customers#internet"
+ 
+  get "/success"  =>  "customers#success"
 
   get "/customerDashboard" => "customers#dashboard"
 

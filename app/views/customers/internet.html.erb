@@ -1,0 +1,57 @@
+<html>
+<h3>List of all available Internet Packages</h3>
+
+<!-- example.erb -->
+
+<!-- example.erb -->
+
+<style>
+
+  .button {
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: yellow;
+    border: 10px solid yellow;
+    border-radius: 10px;
+  }
+
+  th, td {
+    padding: 10px;
+    text-align: center;
+    background-color: black;
+    color: white;
+  }
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Provider ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @packages.each do |record| %>
+      <tr>
+        <td><%= record.description %></td>
+        <td><%= record.price %></td>
+        <td><%= record.provider_id %></td>
+        <td><a href="/success" class="button">Subscribe</a></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+
+</html>
