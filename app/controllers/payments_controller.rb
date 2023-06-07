@@ -39,7 +39,9 @@ class PaymentsController < ApplicationController
 
               @pay.txid = hash 
       
+
               if @pay.save && params[:dues].to_i > 0 && params[:amount].to_i >0
+
                 duePackages = CustomerSubscription.where(id: params[:id])
                 duePackages.update(dues:0)
                 redirect_to "/paymenthistory",notice: 'Payment done' 
