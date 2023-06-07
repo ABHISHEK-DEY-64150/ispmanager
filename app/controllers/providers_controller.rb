@@ -1,6 +1,7 @@
 class ProvidersController < ApplicationController
     before_action :require_provider_logged_in ,only: [:dashboard, :userregister , :addPackages]
     def home
+         
          puts alert
     end
 
