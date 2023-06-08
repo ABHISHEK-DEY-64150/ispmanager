@@ -1,6 +1,7 @@
 class PaymentsController < ApplicationController
     def payment
         @unpaidpack = CustomerSubscription.find(params[:id]);
+        # @pay = Payment.new 
     end
 
     def paymenthistory
@@ -37,17 +38,18 @@ class PaymentsController < ApplicationController
               hash = Digest::SHA256.hexdigest(combined)[0,10]
 
               @pay.txid = hash 
-
-              
       
-              if @pay.save && @pay.dues > 0 && @pay.amount > 0 && @pay.card 
+
+              if @pay.save && params[:dues].to_i > 0 && params[:amount].to_i >0
+
                 duePackages = CustomerSubscription.where(id: params[:id])
                 duePackages.update(dues:0)
-                redirect_to "/paymenthistory",notice: 'Payment done'
+                redirect_to "/paymenthistory",notice: 'Payment done' 
 
               else
-                 flash[:payment_errors] = "payment error"
-                 render :payment,@pay => @pay 
+                #   error_message = @pay.errors.full_messages
+                #   flash[:payment_errors] = error_message
+                  render:payment,@pay=>@pay
               end 
     end
 
