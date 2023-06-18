@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_06_132027) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_18_112439) do
   create_table "customer_subscriptions", force: :cascade do |t|
     t.string "servicetype"
     t.string "packagedescription"
@@ -33,6 +33,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_132027) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["provider_id"], name: "index_customers_on_provider_id"
+  end
+
+  create_table "my_services", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "provider_id", null: false
+    t.integer "package_id", null: false
+    t.string "servicetype"
+    t.string "package"
+    t.decimal "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["package_id"], name: "index_my_services_on_package_id"
+    t.index ["provider_id"], name: "index_my_services_on_provider_id"
+    t.index ["user_id"], name: "index_my_services_on_user_id"
   end
 
   create_table "packages", force: :cascade do |t|
@@ -60,6 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_132027) do
     t.string "servicetype"
     t.string "packagedescription"
     t.integer "price"
+    t.binary "invoicepdf"
   end
 
   create_table "providers", force: :cascade do |t|
@@ -71,5 +86,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_132027) do
 
   add_foreign_key "customer_subscriptions", "customers"
   add_foreign_key "customers", "providers"
+  add_foreign_key "my_services", "packages"
+  add_foreign_key "my_services", "providers"
+  add_foreign_key "my_services", "users"
   add_foreign_key "packages", "providers"
 end
