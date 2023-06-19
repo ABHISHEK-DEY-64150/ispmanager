@@ -29,7 +29,7 @@ class PaymentsController < ApplicationController
 
      def makePayment
               
-              puts "=====subs====>",params
+              p "=====subs====>",params
               # puts "ppppp--->",params[:packagedescription]
               @pay = Payment.new
               @pay.servicetype = params[:servicetype]
@@ -38,9 +38,12 @@ class PaymentsController < ApplicationController
               @pay.dues = params[:dues]
               @pay.amount = params[:amount]  
               @pay.customer_id = session[:customer_id]
+              customer_name=Customer.find(@pay.customer_id).name
+              customer_email=Customer.find(@pay.customer_id).email
               customersub = CustomerSubscription.find(params[:id])
               @pay.package_id = customersub.package_id
               @pay.provider_id = customersub.provider_id
+              provider_email=Provider.find(@pay.provider_id).email
               @pay.subscription_id = params[:id]
               @pay.timestamp = Time.now
               @pay.card = params[:card]
@@ -62,22 +65,22 @@ class PaymentsController < ApplicationController
                 
         r = Receipts::Receipt.new(
         details: [
-          ["Receipt Number", hash],
+          ["Transaction ID", hash],
           ["Date paid", Date.today],
           ["Payment method", "Online"]
         ],
         company: {
           name: "Example, LLC",
           address: "123 Fake Street\nNew York City, NY 10012",
-          email: "support@example.com"
+          email: provider_email
         },
         recipient: [
-          "<b>Customer Details:</b>",
+          "<b>Customer Details</b>",
           ["Customer ID : #{@pay.customer_id}"],
+          ["Customer Name : #{customer_name}"],
           "Their Address",
           "City, State Zipcode",
-          nil,
-          "customer@example.org"
+          customer_email
         ],
         line_items: [
           ["<b>Item</b>", "<b>Unit Cost</b>", "<b>Quantity</b>", "<b>Amount</b>"],
@@ -85,8 +88,7 @@ class PaymentsController < ApplicationController
           [nil, nil, "Subtotal", "$#{subtotal}"],
           [nil, nil, "Tax", "5%"],
           [nil, nil, "Total", "$#{subtotal*1.05}"],
-          [nil, nil, "<b>Amount paid</b>", "$#{subtotal*1.05}"],
-          [nil, nil, "Refunded on #{Date.today}", "$5.00"]
+          [nil, nil, "<b>Amount paid</b>", "$#{subtotal*1.05}"]
         ],
         footer: "Thanks for your business. Please contact us if you have any questions."
       )
